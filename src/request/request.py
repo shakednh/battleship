@@ -1,7 +1,7 @@
 import struct
 from abc import ABC
 
-from config.request import MessageType
+from config.request_conf import MessageType
 
 
 class RequestHeader:
