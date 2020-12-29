@@ -1,6 +1,6 @@
 import src.exceptions.battleship_exception as bship_exception
 
-from config.request_deserializer import message_type_to_class
+from config.request_deserializer_conf import message_type_to_class
 from src.request.request import RequestHeader
 
 
