@@ -1,4 +1,6 @@
 from abc import ABC
+from contextlib import AbstractContextManager
+
 from config.connector_conf import HOST_IP
 from src.exceptions.connector_exception import ConnectorNotConnectedException
 import socket
@@ -20,6 +22,13 @@ class TCPServerConnector(IStream):
         self.port = port
         self.socket = None
         self.conn = None
+
+    def __enter__(self):
+        self.connect()
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.disconnect()
 
     def connect(self):
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -44,9 +53,12 @@ class TCPServerConnector(IStream):
         return self.conn.sendall(data)
 
 
-class TCPClientConnector(IStream):
+class TCPClientConnector(IStream, AbstractContextManager):
     def __init__(self):
         self.socket = None
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.disconnect()
 
     def connect(self, ip, port):
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

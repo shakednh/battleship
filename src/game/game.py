@@ -8,6 +8,10 @@ logger = logging.getLogger(__name__)
 
 
 class Game:
+    """
+    Responsible on the logic of a single Battleships game
+    """
+
     def __init__(self, user_handler: UserHandler, communication_manager: CommunicationManager, is_starting: bool):
         self.user_handler = user_handler
         self.communication_manager = communication_manager
@@ -16,7 +20,7 @@ class Game:
         self.is_end = False
         self.is_won = False
 
-    def start(self):
+    def start_game(self):
         logger.info('Starting game')
         self.board = self.user_handler.get_board()
         self.communication_manager.finish_board_order()
@@ -26,16 +30,20 @@ class Game:
         self.is_won = False
         while not self.is_end:
             self._game_round()
+        logger.info('Game ended - is_won=%s', self.is_won)
+        if self.is_won:
+            self.user_handler.print_win()
+        else:
+            self.user_handler.print_lose()
 
     def _game_round(self):
+        first, second = self.enemy_turn, self.do_turn
         if self.is_starting:
-            self.do_turn()
-            if self.is_end:
-                return
-            self.enemy_turn()
-        else:
-            self.enemy_turn()
-            self.do_turn()
+            first, second = second, first
+        first()
+        if self.is_end:
+            return
+        second()
 
     def do_turn(self):
         x, y = self.user_handler.get_guess()
@@ -55,4 +63,4 @@ class Game:
             self.is_won = False
             self.is_end = True
             return
-        self.user_handler.print_result_code(result_code)
+        self.user_handler.print_enemy_guess_result(x, y, result_code)
