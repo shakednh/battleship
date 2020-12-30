@@ -2,10 +2,10 @@ from enum import Enum, auto
 
 
 class Orientation(Enum):
-    up = auto(),
-    down = auto(),
-    left = auto(),
-    right = auto(),
+    up = auto()
+    down = auto()
+    left = auto()
+    right = auto()
 
 
 string_to_orientation = {
@@ -21,3 +21,7 @@ orientation_to_vector = {
     Orientation.left: (-1, 0),
     Orientation.right: (1, 0),
 }
+
+# TODO for debug
+# battleship_sizes = [5, 4, 3, 3, 2]
+battleship_sizes = [2]

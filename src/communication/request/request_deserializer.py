@@ -1,14 +1,20 @@
 import src.exceptions.battleship_exception as bship_exception
+from config.request_conf import MessageType
 
 from config.request_deserializer_conf import message_type_to_class
-from src.communication.request import RequestHeader
+from src.communication.request.request import RequestHeader
 
 
 class RequestDeserializer:
-    def __init__(self, request_header:RequestHeader):
+    def __init__(self, request_header: RequestHeader):
         self.request_header = request_header
 
     def deserialize_request(self, data):
+        """
+        Gets a raw request bytes and return the correspondent request class
+        :param data: bytes
+        :return: a request class
+        """
         # extract magic and message type
         magic_len = len(self.request_header.magic)
         header_len = magic_len + 1
@@ -21,7 +27,7 @@ class RequestDeserializer:
         if self.request_header.magic != magic:
             raise bship_exception.InvalidMagicException
 
-        request_cls = message_type_to_class.get(message_type)
+        request_cls = message_type_to_class.get(MessageType(message_type))
         if not request_cls:
             raise bship_exception.InvalidMessageTypeException
 

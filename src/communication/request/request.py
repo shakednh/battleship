@@ -9,7 +9,7 @@ class RequestHeader:
         self.magic = magic.encode()
 
     def get_header(self, message_type):
-        return self.magic + struct.pack('B', message_type)
+        return self.magic + struct.pack('B', message_type.value)
 
 
 class IRequest(ABC):
@@ -53,7 +53,7 @@ class OrderRequest(IRequest):
         self.request_header = request_header
 
     def serialize(self):
-        return self.request_header.get_header(MessageType.GAME_REQUEST)
+        return self.request_header.get_header(MessageType.ORDER)
 
     @staticmethod
     def deserialize(request_header, data):
@@ -68,7 +68,7 @@ class GuessRequest(IRequest):
 
     def serialize(self):
         coordinates_byte = 0xf * self.x + self.y
-        header = self.request_header.get_header(MessageType.GAME_REQUEST)
+        header = self.request_header.get_header(MessageType.GUESS)
         return header + struct.pack('B', coordinates_byte)
 
     @staticmethod
@@ -85,12 +85,12 @@ class ResultRequest(IRequest):
         self.result_code = result_code
 
     def serialize(self):
-        header = self.request_header.get_header(MessageType.GAME_REPLY)
-        return header + struct.pack('B', self.result_code)
+        header = self.request_header.get_header(MessageType.RESULT)
+        return header + struct.pack('B', self.result_code.value)
 
     @staticmethod
     def deserialize(request_header, data):
-        result_code = int(data[1])
+        result_code = int(data[0])
         return ResultRequest(request_header, result_code)
 
 
@@ -100,8 +100,8 @@ class ErrorRequest(IRequest):
         self.error_code = error_code
 
     def serialize(self):
-        header = self.request_header.get_header(MessageType.GAME_REPLY)
-        return header + struct.pack('B', self.error_code)
+        header = self.request_header.get_header(MessageType.ERROR)
+        return header + struct.pack('B', self.error_code.value)
 
     @staticmethod
     def deserialize(request_header, data):
