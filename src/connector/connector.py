@@ -29,6 +29,7 @@ class TCPServerConnector(IStream):
         logger.info('Connected by %s', address)
 
     def disconnect(self):
+        logger.info("Closing connection of socket: %s", self.socket)
         self.conn.close()
         self.conn = None
         self.socket.close()
@@ -53,6 +54,7 @@ class TCPClientConnector(IStream):
         logger.info('Connected to %s:%s', (ip, port))
 
     def disconnect(self):
+        logger.info("Closing connection of socket: %s", self.socket)
         self.socket.close()
         self.socket = None
 
