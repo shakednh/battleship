@@ -12,6 +12,12 @@ class Board:
         self.num_alive = len(battleships)
 
     def try_hit(self, x, y):
+        """
+        Trying to hit all the ships in this board with te given coordinates
+        :param x: int
+        :param y: int
+        :return: appropriate ResultCode
+        """
         for ship in self.battleships:
             result = ship.try_hit(x, y)
             if result != ResultCode.MISS:
