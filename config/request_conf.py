@@ -10,4 +10,11 @@ class MessageType(Enum):
     ERROR = auto(),
 
 
+class ResultCode(Enum):
+    MISS = 0,
+    HIT = auto(),
+    HIT_FINAL = auto(),
+    FINISH = auto(),
+
+
 MAGIC = 'BS1p'
