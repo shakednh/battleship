@@ -1,5 +1,5 @@
 from config.package_packer import MessageType
-from src.request.request import GameRequest, GameReplyRequest, OrderRequest, GuessRequest, ErrorRequest
+from src.communication.request import GameRequest, GameReplyRequest, OrderRequest, GuessRequest, ErrorRequest
 
 message_type_to_class = {
     MessageType.GAME_REQUEST: GameRequest,

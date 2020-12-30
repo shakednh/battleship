@@ -1,8 +1,8 @@
 import logging
 
-from src.request.request import RequestHeader, OrderRequest, GuessRequest, ResultRequest
-from src.connector.connector import IStream
-from src.request.request_deserializer import RequestDeserializer
+from src.communication.request import RequestHeader, OrderRequest, GuessRequest, ResultRequest
+from src.communication.connector.connector import IStream
+from src.communication.request import RequestDeserializer
 
 logger = logging.getLogger(__name__)
 
