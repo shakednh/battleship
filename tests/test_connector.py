@@ -1,5 +1,5 @@
 from config import connector_conf
-from src.connector.connector import TCPServerConnector, TCPClientConnector
+from src.communication.connector.connector import TCPServerConnector, TCPClientConnector
 import threading
 
 

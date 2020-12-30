@@ -1,7 +1,7 @@
 import src.exceptions.battleship_exception as bship_exception
 
 from config.request_deserializer_conf import message_type_to_class
-from src.request.request import RequestHeader
+from src.communication.request import RequestHeader
 
 
 class RequestDeserializer:

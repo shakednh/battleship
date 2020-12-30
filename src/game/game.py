@@ -2,7 +2,6 @@ import logging
 
 from config.request_conf import ResultCode
 from src.communication.communication_manager import CommunicationManager
-from src.request.request import OrderRequest, RequestHeader
 from src.user_handler.user_handler import UserHandler
 
 logger = logging.getLogger(__name__)
